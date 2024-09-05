@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Typography, Grid, Paper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useAuth } from "../../context/AuthContext";
@@ -11,7 +11,24 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function Dashboard() {
-  const { user } = useAuth();
+  const [patients, setPatients] = useState([]);
+  const [appointments, setAppointments] = useState([]);
+  const { user, getPatients, getAppointments } = useAuth();
+
+  const fetchPatients = async () => {
+    const fetchedPatients = await getPatients();
+    setPatients(fetchedPatients);
+  };
+
+  const fetchAppointments = async () => {
+    const fetchedAppointments = await getAppointments();
+    setAppointments(fetchedAppointments);
+  };
+
+  useEffect(() => {
+    fetchPatients();
+    fetchAppointments();
+  }, []);
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -23,13 +40,13 @@ function Dashboard() {
           <Grid item xs={12} md={4}>
             <Item>
               <Typography variant="h6">Total Patients</Typography>
-              <Typography variant="h4">1,234</Typography>
+              <Typography variant="h4">{patients.length}</Typography>
             </Item>
           </Grid>
           <Grid item xs={12} md={4}>
             <Item>
               <Typography variant="h6">Appointments Today</Typography>
-              <Typography variant="h4">42</Typography>
+              <Typography variant="h4">{appointments.length}</Typography>
             </Item>
           </Grid>
           <Grid item xs={12} md={4}>

@@ -15,7 +15,7 @@ function Navigation() {
         <Box>
           {user ? (
             <>
-              <Button color="inherit" component={RouterLink} to="/">
+              <Button color="inherit" component={RouterLink} to="/dashboard">
                 Dashboard
               </Button>
               {user.role === "doctor" && (

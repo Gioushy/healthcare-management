@@ -36,10 +36,10 @@ function Login() {
       } else {
         await register(email, password, firstName, lastName, role);
       }
-      navigate("/");
     } catch (error) {
       setError(isLogin ? "Failed to log in" : "Failed to register");
     }
+    navigate("/dashboard");
   };
 
   return (
